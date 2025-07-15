@@ -47,7 +47,7 @@ async def update_user(user_id: int, req: Request):
             email = '{data['email']}',
             password_nohash = '{data['password']}'
         WHERE user_id = {user_id}
-    """
+    """ 
     conn.execute(query)
     conn.commit()
     conn.close()
