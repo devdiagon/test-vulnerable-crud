@@ -41,7 +41,7 @@ function App() {
             {Object.keys(userForm).map(k => (
               <input key={k} placeholder={k} value={userForm[k]} onChange={e => setUserForm({ ...userForm, [k]: e.target.value })} />
             ))}
-            <button type="submit">Add</button>
+            <button type="submit">Agregar</button>
           </form>
         </div>
 
@@ -51,7 +51,7 @@ function App() {
             {Object.keys(catForm).map(k => (
               <input key={k} placeholder={k} value={catForm[k]} onChange={e => setCatForm({ ...catForm, [k]: e.target.value })} />
             ))}
-            <button type="submit">Add</button>
+            <button type="submit">Agregar</button>
           </form>
         </div>
 
@@ -61,7 +61,7 @@ function App() {
             {Object.keys(itemForm).map(k => (
               <input key={k} placeholder={k} value={itemForm[k]} onChange={e => setItemForm({ ...itemForm, [k]: e.target.value })} />
             ))}
-            <button type="submit">Add</button>
+            <button type="submit">Agregar</button>
           </form>
         </div>
       </div>

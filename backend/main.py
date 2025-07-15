@@ -143,7 +143,7 @@ async def update_item(item_id: int, req: Request):
 @app.delete("/items/{item_id}")
 def delete_item(item_id: int):
     conn = get_connection()
-    query = f"DELETE FROM items WHERE item_id = {item_id}"  # ⚠️ SQL Injection intencionado
+    query = f"DELETE FROM items WHERE item_id = {item_id}"
     conn.execute(query)
     conn.commit()
     conn.close()
