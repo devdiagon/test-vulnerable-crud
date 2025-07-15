@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './App.css';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -9,9 +10,9 @@ function App() {
   const [catForm, setCatForm] = useState({ category_name: '', description: '' });
   const [itemForm, setItemForm] = useState({ item_name: '', description: '', category_id: '', current_quantity: 0 });
 
-const [editUser, setEditUser] = useState(null);
-const [editCategory, setEditCategory] = useState(null);
-const [editItem, setEditItem] = useState(null);
+  const [editUser, setEditUser] = useState(null);
+  const [editCategory, setEditCategory] = useState(null);
+  const [editItem, setEditItem] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:8000/users').then(res => res.json()).then(setUsers);
@@ -33,29 +34,37 @@ const [editItem, setEditItem] = useState(null);
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>Agregar Usuario</h2>
-      <form onSubmit={e => { e.preventDefault(); submitForm('users', userForm); }}>
-        {Object.keys(userForm).map(k => (
-          <input key={k} placeholder={k} value={userForm[k]} onChange={e => setUserForm({ ...userForm, [k]: e.target.value })} />
-        ))}
-        <button type="submit">Add</button>
-      </form>
+      <div className="grid-container">
+        <div className="grid-item">
+          <h2>Agregar Usuario</h2>
+          <form onSubmit={e => { e.preventDefault(); submitForm('users', userForm); }}>
+            {Object.keys(userForm).map(k => (
+              <input key={k} placeholder={k} value={userForm[k]} onChange={e => setUserForm({ ...userForm, [k]: e.target.value })} />
+            ))}
+            <button type="submit">Add</button>
+          </form>
+        </div>
 
-      <h2>Agregar Categoría</h2>
-      <form onSubmit={e => { e.preventDefault(); submitForm('categories', catForm); }}>
-        {Object.keys(catForm).map(k => (
-          <input key={k} placeholder={k} value={catForm[k]} onChange={e => setCatForm({ ...catForm, [k]: e.target.value })} />
-        ))}
-        <button type="submit">Add</button>
-      </form>
+        <div className="grid-item">
+          <h2>Agregar Categoría</h2>
+          <form onSubmit={e => { e.preventDefault(); submitForm('categories', catForm); }}>
+            {Object.keys(catForm).map(k => (
+              <input key={k} placeholder={k} value={catForm[k]} onChange={e => setCatForm({ ...catForm, [k]: e.target.value })} />
+            ))}
+            <button type="submit">Add</button>
+          </form>
+        </div>
 
-      <h2>Agregar Item</h2>
-      <form onSubmit={e => { e.preventDefault(); submitForm('items', itemForm); }}>
-        {Object.keys(itemForm).map(k => (
-          <input key={k} placeholder={k} value={itemForm[k]} onChange={e => setItemForm({ ...itemForm, [k]: e.target.value })} />
-        ))}
-        <button type="submit">Add</button>
-      </form>
+        <div className="grid-item">
+          <h2>Agregar Item</h2>
+          <form onSubmit={e => { e.preventDefault(); submitForm('items', itemForm); }}>
+            {Object.keys(itemForm).map(k => (
+              <input key={k} placeholder={k} value={itemForm[k]} onChange={e => setItemForm({ ...itemForm, [k]: e.target.value })} />
+            ))}
+            <button type="submit">Add</button>
+          </form>
+        </div>
+      </div>
 
       <h3>Usuarios</h3>
       <ul>{users.map(u => (
@@ -132,7 +141,7 @@ const [editItem, setEditItem] = useState(null);
       <ul>{items.map(i => (
         <li key={i.item_id}>
           {i.item_name} (qty: {i.current_quantity}) - {i.description}
-           <button onClick={() => setEditItem(i)}>Editar</button>
+          <button onClick={() => setEditItem(i)}>Editar</button>
           <button onClick={() => deleteEntry('items', i.item_id)}>Eliminar</button>
         </li>
       ))}</ul>
