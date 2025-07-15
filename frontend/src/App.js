@@ -1,35 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+  const [users, setUsers] = useState([]);
+  const [form, setForm] = useState({ full_name: '', military_rank: '', email: '', password: '' });
 
   useEffect(() => {
-    fetch("http://localhost:8000/items")
+    fetch('http://localhost:8000/users')
       .then(res => res.json())
-      .then(data => setItems(data));
+      .then(setUsers);
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8000/items", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, description: desc }),
+    fetch('http://localhost:8000/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
     }).then(() => window.location.reload());
   };
 
   return (
     <div>
-      <h1>Items</h1>
+      <h2>Add User (No validation/XSS possible)</h2>
       <form onSubmit={handleSubmit}>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
-        <input value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Description" />
+        {Object.keys(form).map(k => (
+          <input key={k} placeholder={k} value={form[k]} onChange={e => setForm({ ...form, [k]: e.target.value })} />
+        ))}
         <button type="submit">Add</button>
       </form>
+      <h3>User List</h3>
       <ul>
-        {items.map(item => <li key={item.id}>{item.name}: {item.description}</li>)}
+        {users.map(u => (
+          <li key={u.user_id}>
+            <b dangerouslySetInnerHTML={{ __html: u.full_name }}></b> - {u.email}
+          </li>
+        ))}
       </ul>
     </div>
   );
